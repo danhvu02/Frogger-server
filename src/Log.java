@@ -102,7 +102,7 @@ public class Log extends Object implements Runnable {
 			//update x
 			//this.x = currentX;
 			this.setX(currentX);
-			System.out.println("Log X, Y: " + this.x + "," + this.y);
+			//System.out.println("Log X, Y: " + this.x + "," + this.y);
 			
 			this.detectCollision();
 			

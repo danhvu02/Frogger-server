@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -114,7 +117,7 @@ public class GamePrep{
 
 
 	//main 
-	public static void main( String args []) {
+	public static void main( String args []) throws IOException{
 		//instances of our data classes (store position, etc here)
 		Frog frog = new Frog();
 		
@@ -125,10 +128,22 @@ public class GamePrep{
 		Log logs1[] = new Log[3];
 		Log logs2[] = new Log[3];
 		Log logs3[] = new Log[2];
-				
+		
 		int gameScore = 0;
 		
 		startGame(frog, cars1,cars2, cars3, logs1, logs2, logs3);
+		
+		final int SERVER_PORT = 5556;
+		ServerSocket server = new ServerSocket(SERVER_PORT);
+		System.out.println("Waiting for clients to connect...");
+		while(true) {
+			Socket s = server.accept();
+			System.out.println("client connected");
+			
+			ServerService myService = new ServerService(s, frog);
+			Thread t = new Thread(myService);
+			t.start();
+		}
 		
 	}
 

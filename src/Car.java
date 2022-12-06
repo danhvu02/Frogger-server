@@ -108,7 +108,7 @@ public class Car extends Object implements Runnable {
 			//update x
 			//this.x = currentX;
 			this.setX(currentX);
-			System.out.println("Car X, Y: " + this.x + "," + this.y);
+			//System.out.println("Car X, Y: " + this.x + "," + this.y);
 			
 			//check for collision
 			if ( this.visible ) this.detectCollision();
