@@ -165,6 +165,41 @@ public class ServerService implements Runnable {
 			out.flush();
 			s2.close();
 			
+		}else if (command.equals("GETLOGS")) {
+				
+				int x1 = logsBot[1].getX();
+				int y1 = logsBot[1].getY();
+				int x2 = logsBot[2].getX();
+				int y2 = logsBot[2].getY();
+				int x3 = logsBot[3].getX();
+				int y3 = logsBot[3].getY();
+				
+				int x4 = logsMid[1].getX();
+				int y4 = logsMid[1].getY();
+				int x5 = logsMid[2].getX();
+				int y5 = logsMid[2].getY();
+				int x6 = logsMid[3].getX();
+				int y6 = logsMid[3].getY();
+				
+				int x7 = logsTop[1].getX();
+				int y7 = logsTop[1].getY();
+				int x8 = logsTop[2].getX();
+				int y8 = logsTop[2].getY();
+				
+				//send a response
+				Socket s2 = new Socket("localhost", CLIENT_PORT);
+				
+				//Initialize data stream to send data out
+				OutputStream outstream = s2.getOutputStream();
+				PrintWriter out = new PrintWriter(outstream);
+
+				String commandOut = "GETLOGS " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + x3 + " " + y3 + " " 
+									+ x4 + " " + y4 + " " + x5 + " " + y5 + " " + x6 + " " + y6 + " " +
+									x7 + " " + y7 + " " + x8 + " " + y8 + "\n"; 
+				System.out.println("Sending: " + commandOut);
+				out.println(commandOut);
+				out.flush();
+				s2.close();
 		} else if (command.equals("STARTGAME")) {
 			for(int i=0;i<3;i++){
 				carsBot[i].setMoving(true);
