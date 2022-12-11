@@ -127,6 +127,44 @@ public class ServerService implements Runnable {
 			out.flush();
 			s2.close();
 			
+		} else if (command.equals("GETCARS")) {
+			
+			int x1 = carsBot[1].getX();
+			int y1 = carsBot[1].getY();
+			int x2 = carsBot[2].getX();
+			int y2 = carsBot[2].getY();
+			int x3 = carsBot[3].getX();
+			int y3 = carsBot[3].getY();
+			
+			int x4 = carsMid[1].getX();
+			int y4 = carsMid[1].getY();
+			int x5 = carsMid[2].getX();
+			int y5 = carsMid[2].getY();
+			int x6 = carsMid[3].getX();
+			int y6 = carsMid[3].getY();
+			
+			int x7 = carsTop[1].getX();
+			int y7 = carsTop[1].getY();
+			int x8 = carsTop[2].getX();
+			int y8 = carsTop[2].getY();
+			int x9 = carsTop[3].getX();
+			int y9 = carsTop[3].getY();
+			
+			//send a response
+			Socket s2 = new Socket("localhost", CLIENT_PORT);
+			
+			//Initialize data stream to send data out
+			OutputStream outstream = s2.getOutputStream();
+			PrintWriter out = new PrintWriter(outstream);
+
+			String commandOut = "GETCARS " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + x3 + " " + y3 + " " 
+								+ x4 + " " + y4 + " " + x5 + " " + y5 + " " + x6 + " " + y6 + " " +
+								x7 + " " + y7 + " " + x8 + " " + y8 + " " + x9 + " " + y9 + "\n"; 
+			System.out.println("Sending: " + commandOut);
+			out.println(commandOut);
+			out.flush();
+			s2.close();
+			
 		} else if (command.equals("STARTGAME")) {
 			for(int i=0;i<3;i++){
 				carsBot[i].setMoving(true);
