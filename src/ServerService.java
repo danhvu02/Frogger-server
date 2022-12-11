@@ -13,15 +13,29 @@ public class ServerService implements Runnable {
 	private Scanner in;
 
 	private Frog frog;
+	private Car carsBot[];
+	private Car carsMid[];
+	private Car carsTop[];
+	
+	private Log logsBot[];
+	private Log logsMid[];
+	private Log logsTop[];
 	
 	public ServerService() {
 		super();
 	}
 	
-	public ServerService (Socket aSocket, Frog myFrog) {
+	public ServerService (Socket aSocket, Frog myFrog, Car[] carsBot,  Car[] carsMid,  Car[] carsTop, Log[] logsBot, 
+					 	  Log[] logsMid, Log[] logsTop) {
 		super();
 		this.s = aSocket;
 		this.frog = myFrog;
+		this.carsBot = carsBot;
+		this.carsMid = carsMid;
+		this.carsTop = carsTop;
+		this.logsBot = logsBot;
+		this.logsMid = logsMid;
+		this.logsTop = logsTop;
 	}
 	
 	
@@ -113,6 +127,57 @@ public class ServerService implements Runnable {
 			out.flush();
 			s2.close();
 			
+		} else if (command.equals("STARTGAME")) {
+			for(int i=0;i<3;i++){
+				carsBot[i].setMoving(true);
+				carsMid[i].setMoving(true);
+				carsTop[i].setMoving(true);
+				logsBot[i].setMoving(true);
+				logsMid[i].setMoving(true);
+			}
+			
+			for(int i=0;i<2;i++){
+				logsTop[i].setMoving(true);
+			}
+			
+			//send a response
+			Socket s2 = new Socket("localhost", CLIENT_PORT);
+			
+			//Initialize data stream to send data out
+			OutputStream outstream = s2.getOutputStream();
+			PrintWriter out = new PrintWriter(outstream);
+
+			String commandOut = "STARTGAME";
+			System.out.println("Sending: " + commandOut);
+			out.println(commandOut);
+			out.flush();
+			s2.close();
+			
+		} else if (command.equals("STOPGAME")) {
+			for(int i=0;i<3;i++){
+				carsBot[i].setMoving(false);
+				carsMid[i].setMoving(false);
+				carsTop[i].setMoving(false);
+				logsBot[i].setMoving(false);
+				logsMid[i].setMoving(false);
+			}
+			
+			for(int i=0;i<2;i++){
+				logsTop[i].setMoving(false);
+			}
+			
+			//send a response
+			Socket s2 = new Socket("localhost", CLIENT_PORT);
+			
+			//Initialize data stream to send data out
+			OutputStream outstream = s2.getOutputStream();
+			PrintWriter out = new PrintWriter(outstream);
+
+			String commandOut = "STOPGAME";
+			System.out.println("Sending: " + commandOut);
+			out.println(commandOut);
+			out.flush();
+			s2.close();
 		}
 		
 

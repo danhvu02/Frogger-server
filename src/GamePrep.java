@@ -140,7 +140,7 @@ public class GamePrep{
 			Socket s = server.accept();
 			System.out.println("client connected");
 			
-			ServerService myService = new ServerService(s, frog);
+			ServerService myService = new ServerService(s, frog, cars1, cars2, cars3, logs1, logs2, logs3);
 			Thread t = new Thread(myService);
 			t.start();
 		}
